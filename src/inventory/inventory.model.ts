@@ -1,12 +1,14 @@
-export interface inventory {
+export interface Inventory {
   id: string;
   name: string;
-  description: string;
-  manufacturer: string;
-  status: inventoryStatus
+  price: string;
+  description?: string;
+  manufacturer?: string;
+  status: InventoryStatus;
+  price_fluctuation?: string;
 }
 
-export enum inventoryStatus {
+export enum InventoryStatus {
   ONSALE = 'ONSALE',
   NONSALE = 'NONSALE'
 }
