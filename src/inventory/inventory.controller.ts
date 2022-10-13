@@ -1,8 +1,8 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
-import { inventory } from './inventory.model';
+import { Inventory } from './inventory.model';
 
-@Controller('inventory')
+@Controller('inventorys')
 export class InventoryController {
   constructor(private inventoryService: InventoryService) {
     /**
@@ -12,9 +12,16 @@ export class InventoryController {
      */
   }
 
-  @Get()
-  getAllInventorys(): inventory[] {
+  @Get('/')
+  getAllInventorys(): Inventory[] {
     return this.inventoryService.getAllInventorys();
   }
 
+  @Post()
+  createInventory(
+    @Body('name') name: string,
+    @Body('price') price: string
+  ): Inventory {
+    return this.inventoryService.createInventory(name, price);
+  }
 }

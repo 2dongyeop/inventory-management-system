@@ -12,7 +12,7 @@ export class InventoryService {
 
   createInventory(name: string, price: string) {
     const inventory: Inventory = {
-      id: uuid,
+      id: uuid(),
       name,
       price,
       status: InventoryStatus.NONSALE,
