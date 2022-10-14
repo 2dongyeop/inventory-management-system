@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { Inventory, InventoryStatus } from './inventory.model';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -24,6 +24,7 @@ export class InventoryController {
   }
 
   @Post()
+  @UsePipes(ValidationPipe)
   createInventory(
     @Body() createInventoryDto: CreateInventoryDto
   ): Inventory {
