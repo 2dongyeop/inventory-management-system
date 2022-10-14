@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { Inventory } from './inventory.model';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -28,5 +28,10 @@ export class InventoryController {
     @Body() createInventoryDto: CreateInventoryDto
   ): Inventory {
     return this.inventoryService.createInventory(createInventoryDto);
+  }
+
+  @Delete('/:id')
+  deleteInventory(@Param('id') id: string): void {
+    this.inventoryService.deleteInventory(id);
   }
 }

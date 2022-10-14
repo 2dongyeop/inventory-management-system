@@ -28,4 +28,8 @@ export class InventoryService {
     this.inventorys.push(inventory);
     return inventory;
   }
+
+  deleteInventory(id: string): void {
+    this.inventorys = this.inventorys.filter((inventory) => inventory.id !== id);
+  }
 }
