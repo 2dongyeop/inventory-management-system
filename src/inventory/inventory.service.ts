@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Inventory, InventoryStatus } from './inventory.model';
 import { v1 as uuid } from 'uuid';
+import { CreateInventoryDto } from './dto/create-inventory.dto';
 
 @Injectable()
 export class InventoryService {
@@ -10,7 +11,9 @@ export class InventoryService {
     return this.inventorys;
   }
 
-  createInventory(name: string, price: string) {
+  createInventory(createInventoryDto: CreateInventoryDto) {
+    const { name, price } = createInventoryDto;
+
     const inventory: Inventory = {
       id: uuid(),
       name,

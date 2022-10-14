@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { Inventory } from './inventory.model';
+import { CreateInventoryDto } from './dto/create-inventory.dto';
 
 @Controller('inventorys')
 export class InventoryController {
@@ -19,9 +20,8 @@ export class InventoryController {
 
   @Post()
   createInventory(
-    @Body('name') name: string,
-    @Body('price') price: string
+    @Body() createInventoryDto: CreateInventoryDto
   ): Inventory {
-    return this.inventoryService.createInventory(name, price);
+    return this.inventoryService.createInventory(createInventoryDto);
   }
 }
