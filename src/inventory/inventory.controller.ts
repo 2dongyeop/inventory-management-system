@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { Inventory } from './inventory.model';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -16,6 +16,11 @@ export class InventoryController {
   @Get('/')
   getAllInventorys(): Inventory[] {
     return this.inventoryService.getAllInventorys();
+  }
+
+  @Get('/:id')
+  getInventoryById(@Param('id') id:string): Inventory {
+    return this.inventoryService.getInventoryById(id);
   }
 
   @Post()

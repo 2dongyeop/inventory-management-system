@@ -7,6 +7,10 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 export class InventoryService {
   private inventorys: Inventory[] = [];
 
+  getInventoryById(id: string): Inventory {
+    return this.inventorys.find((inventory) => inventory.id === id);
+  }
+
   getAllInventorys(): Inventory[] {
     return this.inventorys;
   }
