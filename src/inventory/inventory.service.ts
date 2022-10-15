@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Inventory, InventoryStatus } from './inventory.model';
 import { v1 as uuid } from 'uuid';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -8,7 +8,12 @@ export class InventoryService {
   private inventorys: Inventory[] = [];
 
   getInventoryById(id: string): Inventory {
-    return this.inventorys.find((inventory) => inventory.id === id);
+    const found = this.inventorys.find((inventory) => inventory.id === id);
+
+    if (!found) {
+      throw new NotFoundException("해당 Id를 가진 재고는 존재하지 않습니다.");
+    }
+    return found;
   }
 
   getAllInventorys(): Inventory[] {
