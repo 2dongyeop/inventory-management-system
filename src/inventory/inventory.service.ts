@@ -43,6 +43,8 @@ export class InventoryService {
 
 
   deleteInventory(id: string): void {
-    this.inventorys = this.inventorys.filter((inventory) => inventory.id !== id);
+    const found = this.getInventoryById(id);
+
+    this.inventorys = this.inventorys.filter((inventory) => inventory.id !== found.id);
   }
 }
