@@ -2,6 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, Validation
 import { InventoryService } from './inventory.service';
 import { Inventory, InventoryStatus } from './inventory.model';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
+import { InventoryStatusValidationPipe } from './pipes/inventory-status-validation.pipe';
 
 @Controller('inventorys')
 export class InventoryController {
@@ -34,7 +35,7 @@ export class InventoryController {
   @Patch('/:id/status')
   updateInventoryStatus(
     @Param('id') id: string,
-    @Body('status') status: InventoryStatus
+    @Body('status', InventoryStatusValidationPipe) status: InventoryStatus
   ) {
     return this.inventoryService.updateInventoryStatus(id, status);
   }
