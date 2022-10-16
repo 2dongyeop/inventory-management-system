@@ -12,15 +12,21 @@ export class Inventory extends BaseEntity {
   @Column()
   price: string;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   description?: string;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   manufacturer?: string;
 
   @Column()
   status: InventoryStatus;
 
-  @Column()
+  @Column({
+    default: null,
+  })
   price_fluctuation?: string;
 }

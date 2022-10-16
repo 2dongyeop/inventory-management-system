@@ -9,7 +9,7 @@ import { Inventory } from './inventory.entity';
 export class InventoryService {
 
   constructor(
-    @InjectRepository(InventoryRepository)
+    @InjectRepository(Inventory)
     private inventoryRepository: InventoryRepository,
   ) {}
 
@@ -23,8 +23,18 @@ export class InventoryService {
     return found;
   }
 
-  createInventory(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
-    return this.inventoryRepository.createInventory(createInventoryDto);
+  async createInventory(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
+    const { name, price } = createInventoryDto;
+
+    const inventory: Inventory = this.inventoryRepository.create({
+      name,
+      price,
+      status: InventoryStatus.NONSALE,
+    });
+
+    await this.inventoryRepository.save(inventory);
+    return inventory;
+
   }
 
   // updateInventoryStatus(id: string, status: InventoryStatus): Inventory {
