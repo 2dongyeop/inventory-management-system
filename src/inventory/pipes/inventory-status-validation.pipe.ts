@@ -1,5 +1,5 @@
 import { ArgumentMetadata, BadRequestException, PipeTransform } from '@nestjs/common';
-import { InventoryStatus } from '../inventory.model';
+import { InventoryStatus } from '../inventory-status.enum';
 
 export class InventoryStatusValidationPipe implements PipeTransform {
 
