@@ -1,38 +1,32 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InventoryStatus } from './inventory-status.enum';
-import { v1 as uuid } from 'uuid';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InventoryRepository } from './inventory.repository';
+import { Inventory } from './inventory.entity';
 
 @Injectable()
 export class InventoryService {
 
-  // getInventoryById(id: string): Inventory {
-  //   const found = this.inventorys.find((inventory) => inventory.id === id);
-  //
-  //   if (!found) {
-  //     throw new NotFoundException("해당 Id를 가진 재고는 존재하지 않습니다.");
-  //   }
-  //   return found;
-  // }
-  //
-  // getAllInventorys(): Inventory[] {
-  //   return this.inventorys;
-  // }
-  //
-  // createInventory(createInventoryDto: CreateInventoryDto) {
-  //   const { name, price } = createInventoryDto;
-  //
-  //   const inventory: Inventory = {
-  //     id: uuid(),
-  //     name,
-  //     price,
-  //     status: InventoryStatus.NONSALE,
-  //   }
-  //
-  //   this.inventorys.push(inventory);
-  //   return inventory;
-  // }
-  //
+  constructor(
+    @InjectRepository(InventoryRepository)
+    private inventoryRepository: InventoryRepository,
+  ) {}
+
+  async getInventoryById(id: number): Promise<Inventory> {
+    const found = await this.inventoryRepository.findOne({ where: {id: id} });
+
+    if (!found) {
+      throw new NotFoundException("해당 Id를 가진 재고는 존재하지 않습니다.");
+    }
+
+    return found;
+  }
+
+  createInventory(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
+    return this.inventoryRepository.createInventory(createInventoryDto);
+  }
+
   // updateInventoryStatus(id: string, status: InventoryStatus): Inventory {
   //   const inventory = this.getInventoryById(id);
   //
