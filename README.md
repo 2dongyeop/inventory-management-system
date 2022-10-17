@@ -2,35 +2,77 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Overview
+[Nest.js](https://github.com/nestjs/nest)를 이용하여 재고 관리 시스템을 만들어봅니다.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<br/>
 
-## Description
+> 오류 해결 과정은 [블로그 포스팅](https://velog.io/@dongvelop/Nest.js-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0-%EB%AA%A8%EC%9D%8C)를 통해 확인할 수 있습니다.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<br/>
+
+본 프로젝트는 개인 정보 보흐를 위해 생략된 파일들이 있습니다.
+
+- `src/configs/typeorm.config.ts`
+  ```typescript
+  import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+
+  export const typeormConfig: TypeOrmModuleOptions = {
+    type: 'postgres',
+    host: 'localhost',
+    port: 15432, //postgres's default port : 5432 
+    username: '[username]',
+    password: '[password]',
+    database: '[dbname]',
+    entities: [__dirname + '/../**/*.entity.{js,ts}'],
+
+    synchronize: true,
+  };
+  ```
+
+<br/>
+
+- `docker/.env`
+  ```env
+  DB_NAME=[위에서 작성한 dbname]
+  DB_USER=[위에서 작성한 username]
+  DB_PASSWORD=[위에서 작성한 password]
+  POSTGRES_HOME=./postgres
+  ```
+
+<br/>
+
+- `docker/docker-compose.yml`
+  ```yml
+  version: '3.9'
+  services:
+    database:
+      image: postgres
+      container_name: [dbname]
+      environment:
+        POSTGRES_DB: "${DB_NAME}"
+        POSTGRES_USER: "${DB_USER}"
+        POSTGRES_PASSWORD: "${DB_PASSWORD}"
+        POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C"
+      ports:
+        - 15432:5432
+      volumes:
+        - "${POSTGRES_HOME}/data/:/var/lib/postgresql/data/"
+  ```
+
+
+
+<br/>
+
+<br/>
 
 ## Installation
 
 ```bash
 $ npm install
 ```
+
+<br/>
 
 ## Running the app
 
@@ -45,6 +87,8 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+<br/>
+
 ## Test
 
 ```bash
@@ -58,15 +102,21 @@ $ npm run test:e2e
 $ npm run test:cov
 ```
 
+<br/>
+
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+
+<br/>
 
 ## Stay in touch
 
 - Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
 - Website - [https://nestjs.com](https://nestjs.com/)
 - Twitter - [@nestframework](https://twitter.com/nestframework)
+
+<br/>
 
 ## License
 
