@@ -38,13 +38,17 @@ export class InventoryService {
     return inventory;
   }
 
-  // updateInventoryStatus(id: string, status: InventoryStatus): Inventory {
-  //   const inventory = this.getInventoryById(id);
-  //
-  //   inventory.status = status;
-  //   return inventory;
-  // }
-  //
+  async updateInventoryStatus(
+    id: number,
+    status: InventoryStatus,
+  ): Promise<Inventory> {
+    const inventory = this.getInventoryById(id);
+
+    (await inventory).status = status;
+    await this.inventoryRepository.save(await inventory);
+
+    return inventory;
+  }
 
   async deleteInventory(id: number): Promise<void> {
     const result = await this.inventoryRepository.delete(id);

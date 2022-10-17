@@ -37,13 +37,13 @@ export class InventoryController {
     return this.inventoryService.createInventory(createInventoryDto);
   }
 
-  // @Patch('/:id/status')
-  // updateInventoryStatus(
-  //   @Param('id') id: string,
-  //   @Body('status', InventoryStatusValidationPipe) status: InventoryStatus
-  // ) {
-  //   return this.inventoryService.updateInventoryStatus(id, status);
-  // }
+  @Patch('/:id/status')
+  updateInventoryStatus(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('status', InventoryStatusValidationPipe) status: InventoryStatus,
+  ) {
+    return this.inventoryService.updateInventoryStatus(id, status);
+  }
 
   @Delete('/:id')
   deleteInventory(@Param('id', ParseIntPipe) id: number): void {
