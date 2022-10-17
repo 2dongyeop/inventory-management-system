@@ -26,6 +26,11 @@ export class InventoryController {
      */
   }
 
+  @Get()
+  getAllInventorys(): Promise<Inventory[]> {
+    return this.inventoryService.getAllInventorys();
+  }
+
   @Get('/:id')
   getInventoryById(@Param('id') id: number): Promise<Inventory> {
     return this.inventoryService.getInventoryById(id);

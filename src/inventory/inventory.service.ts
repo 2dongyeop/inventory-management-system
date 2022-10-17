@@ -7,11 +7,14 @@ import { Inventory } from './inventory.entity';
 
 @Injectable()
 export class InventoryService {
-
   constructor(
     @InjectRepository(Inventory)
     private inventoryRepository: InventoryRepository,
   ) {}
+
+  async getAllInventorys(): Promise<Inventory[]> {
+    return this.inventoryRepository.find();
+  }
 
   async getInventoryById(id: number): Promise<Inventory> {
     const found = await this.inventoryRepository.findOne({ where: { id: id } });
