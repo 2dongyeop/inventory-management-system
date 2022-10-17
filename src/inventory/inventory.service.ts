@@ -14,16 +14,18 @@ export class InventoryService {
   ) {}
 
   async getInventoryById(id: number): Promise<Inventory> {
-    const found = await this.inventoryRepository.findOne({ where: {id: id} });
+    const found = await this.inventoryRepository.findOne({ where: { id: id } });
 
     if (!found) {
-      throw new NotFoundException("해당 Id를 가진 재고는 존재하지 않습니다.");
+      throw new NotFoundException('해당 Id를 가진 재고는 존재하지 않습니다.');
     }
 
     return found;
   }
 
-  async createInventory(createInventoryDto: CreateInventoryDto): Promise<Inventory> {
+  async createInventory(
+    createInventoryDto: CreateInventoryDto,
+  ): Promise<Inventory> {
     const { name, price } = createInventoryDto;
 
     const inventory: Inventory = this.inventoryRepository.create({
@@ -34,7 +36,6 @@ export class InventoryService {
 
     await this.inventoryRepository.save(inventory);
     return inventory;
-
   }
 
   // updateInventoryStatus(id: string, status: InventoryStatus): Inventory {
@@ -44,10 +45,10 @@ export class InventoryService {
   //   return inventory;
   // }
   //
-  //
-  // deleteInventory(id: string): void {
-  //   const found = this.getInventoryById(id);
-  //
-  //   this.inventorys = this.inventorys.filter((inventory) => inventory.id !== found.id);
-  // }
+
+  async deleteInventory(id: number): Promise<void> {
+    const result = await this.inventoryRepository.delete(id);
+
+    console.log('result', result);
+  }
 }

@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseIntPipe,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe
+} from "@nestjs/common";
 import { InventoryService } from './inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -34,8 +45,8 @@ export class InventoryController {
   //   return this.inventoryService.updateInventoryStatus(id, status);
   // }
 
-  // @Delete('/:id')
-  // deleteInventory(@Param('id') id: string): void {
-  //   this.inventoryService.deleteInventory(id);
-  // }
+  @Delete('/:id')
+  deleteInventory(@Param('id', ParseIntPipe) id: number): void {
+    this.inventoryService.deleteInventory(id);
+  }
 }
