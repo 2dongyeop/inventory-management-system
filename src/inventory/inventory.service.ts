@@ -49,6 +49,10 @@ export class InventoryService {
   async deleteInventory(id: number): Promise<void> {
     const result = await this.inventoryRepository.delete(id);
 
+    if (result.affected == 0) {
+      throw new NotFoundException(`해당 Id를 가진 재고는 존재하지 않습니다.`);
+    }
+
     console.log('result', result);
   }
 }
