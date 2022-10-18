@@ -9,7 +9,7 @@ import {
   Post,
   UsePipes,
   ValidationPipe
-} from "@nestjs/common";
+} from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
