@@ -63,7 +63,7 @@ export class InventoryController {
     @Param('id', ParseIntPipe) id: number,
     @Body('manufacturer') manufacturer: string,
   ) {
-    return this.inventoryService.updateInventoryDescription(id, manufacturer);
+    return this.inventoryService.updateInventoryManufacturer(id, manufacturer);
   }
 
   @Delete('/:id')
