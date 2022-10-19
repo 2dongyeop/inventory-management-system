@@ -50,6 +50,22 @@ export class InventoryController {
     return this.inventoryService.updateInventoryStatus(id, status);
   }
 
+  @Patch('/:id/descriptions')
+  updateInventoryDescription(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('description') description: string,
+  ) {
+    return this.inventoryService.updateInventoryDescription(id, description);
+  }
+
+  @Patch('/:id/manufacturers')
+  updateInventoryManufacturer(
+    @Param('id', ParseIntPipe) id: number,
+    @Body('manufacturer') manufacturer: string,
+  ) {
+    return this.inventoryService.updateInventoryDescription(id, manufacturer);
+  }
+
   @Delete('/:id')
   deleteInventory(@Param('id', ParseIntPipe) id: number): void {
     this.inventoryService.deleteInventory(id);

@@ -53,6 +53,30 @@ export class InventoryService {
     return inventory;
   }
 
+  async updateInventoryDescription(
+    id: number,
+    description: string,
+  ): Promise<Inventory> {
+    const inventory = this.getInventoryById(id);
+
+    (await inventory).description = description;
+    await this.inventoryRepository.save(await inventory);
+
+    return inventory;
+  }
+
+  async updateInventoryManufacturer(
+    id: number,
+    manufacturer: string,
+  ): Promise<Inventory> {
+    const inventory = this.getInventoryById(id);
+
+    (await inventory).manufacturer = manufacturer;
+    await this.inventoryRepository.save(await inventory);
+
+    return inventory;
+  }
+
   async deleteInventory(id: number): Promise<void> {
     const result = await this.inventoryRepository.delete(id);
 
