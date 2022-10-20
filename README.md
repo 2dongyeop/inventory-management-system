@@ -7,11 +7,11 @@
 
 <br/>
 
-> 오류 해결 과정은 [블로그 포스팅](https://velog.io/@dongvelop/Nest.js-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0-%EB%AA%A8%EC%9D%8C)를 통해 확인할 수 있습니다.
+> 오류 해결 과정은 [블로그 포스팅](https://velog.io/@dongvelop/series/nestjs)를 통해 확인할 수 있습니다.
 
 <br/>
 
-본 프로젝트는 개인 정보 보흐를 위해 생략된 파일들이 있습니다.
+본 프로젝트는 개인 정보 보호를 위해 생략된 파일들이 있습니다.
 
 - `src/configs/typeorm.config.ts`
   ```typescript
