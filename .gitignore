@@ -5,6 +5,7 @@
 *config*
 docker
 *auth.module.ts*
+*jwt.strategy*
 
 # Logs
 logs
