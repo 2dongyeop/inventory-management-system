@@ -4,6 +4,7 @@
 
 *config*
 docker
+*auth.module.ts*
 
 # Logs
 logs
