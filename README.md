@@ -60,6 +60,61 @@
         - "${POSTGRES_HOME}/data/:/var/lib/postgresql/data/"
   ```
 
+<br/>
+
+- `src/auth/auth.module.ts`
+  ```typescript
+  @Module({
+    imports: [
+      PassportModule.register({ defaultStrategy: 'jwt' }),
+      JwtModule.register({
+        secret: '[자신이 원하는 시크릿 키]', //토큰 생성시 사용.
+        signOptions: {
+          expiresIn: 60 * 60,
+        },
+      }),
+      TypeOrmModule.forFeature([User]),
+    ],
+    controllers: [AuthController],
+    providers: [AuthService, JwtStrategy],
+    exports: [JwtStrategy, PassportModule],
+  })
+  export class AuthModule {}
+  ```
+
+
+
+<br/>
+
+- `src/auth/auth.module.ts`
+  ```typescript
+  @Injectable()
+  export class JwtStrategy extends PassportStrategy(Strategy) {
+    constructor(
+      @InjectRepository(User)
+      private userRepository: UserRepository,
+    ) {
+      super({
+        secretOrKey: '[위에서 작성한 시크릿 키와 동일하게 입력]', // 토큰이 유효한지 체크할 때 사용.
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // 토큰을 AuthHeader에서 BearerToken 타입으로 가져옴.
+      });
+    }
+
+    async validate(payload) {
+      const { username } = payload;
+      const user: User = await this.userRepository.findOne({
+        where: { username: username },
+      });
+
+      if (!user) {
+        throw new UnauthorizedException();
+      }
+
+      return user;
+    }
+  }
+
+  ```
 
 
 <br/>
