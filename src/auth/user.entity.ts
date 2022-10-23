@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column,
-  Entity,
+  Entity, OneToMany,
   PrimaryGeneratedColumn,
-  Unique,
-} from 'typeorm';
+  Unique
+} from "typeorm";
+import { Inventory } from "../inventory/inventory.entity";
+import { type } from "os";
 
 @Entity()
 @Unique(['username'])
@@ -17,4 +19,9 @@ export class User extends BaseEntity {
 
   @Column()
   password: string;
+
+  @OneToMany((type) => Inventory, (inventory) => inventory.user, {
+    eager: true,
+  })
+  inventorys: Inventory[];
 }

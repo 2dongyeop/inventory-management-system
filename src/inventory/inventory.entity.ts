@@ -1,5 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { InventoryStatus } from './inventory-status.enum';
+import { User } from "../auth/user.entity";
 
 @Entity()
 export class Inventory extends BaseEntity {
@@ -29,4 +30,7 @@ export class Inventory extends BaseEntity {
     default: null,
   })
   price_fluctuation?: string;
+
+  @ManyToOne((type) => User, (user) => user.inventorys, { eager: false })
+  user: User;
 }
