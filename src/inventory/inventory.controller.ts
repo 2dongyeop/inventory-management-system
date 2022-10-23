@@ -6,17 +6,19 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post,
+  Post, UseGuards,
   UsePipes,
   ValidationPipe
-} from '@nestjs/common';
+} from "@nestjs/common";
 import { InventoryService } from './inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { InventoryStatusValidationPipe } from './pipes/inventory-status-validation.pipe';
 import { Inventory } from './inventory.entity';
+import { AuthGuard } from "@nestjs/passport";
 
 @Controller('inventorys')
+@UseGuards(AuthGuard())
 export class InventoryController {
   constructor(private inventoryService: InventoryService) {
     /**
