@@ -4,6 +4,7 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryRepository } from './inventory.repository';
 import { Inventory } from './inventory.entity';
+import { User } from "../auth/user.entity";
 
 @Injectable()
 export class InventoryService {
@@ -28,6 +29,7 @@ export class InventoryService {
 
   async createInventory(
     createInventoryDto: CreateInventoryDto,
+    user: User,
   ): Promise<Inventory> {
     const { name, price } = createInventoryDto;
 
@@ -35,6 +37,7 @@ export class InventoryService {
       name,
       price,
       status: InventoryStatus.NONSALE,
+      user,
     });
 
     await this.inventoryRepository.save(inventory);

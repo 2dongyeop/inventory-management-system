@@ -16,6 +16,8 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { InventoryStatusValidationPipe } from './pipes/inventory-status-validation.pipe';
 import { Inventory } from './inventory.entity';
 import { AuthGuard } from "@nestjs/passport";
+import { GetUser } from "../auth/get-user.decorator";
+import { User } from "../auth/user.entity";
 
 @Controller('inventorys')
 @UseGuards(AuthGuard())
@@ -40,8 +42,11 @@ export class InventoryController {
 
   @Post()
   @UsePipes(ValidationPipe)
-  createInventory(@Body() createInventoryDto: CreateInventoryDto): Promise<Inventory> {
-    return this.inventoryService.createInventory(createInventoryDto);
+  createInventory(
+    @Body() createInventoryDto: CreateInventoryDto,
+    @GetUser() user: User,
+  ): Promise<Inventory> {
+    return this.inventoryService.createInventory(createInventoryDto, user);
   }
 
   @Patch('/:id/status')
