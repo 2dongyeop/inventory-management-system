@@ -4,7 +4,7 @@ import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryRepository } from './inventory.repository';
 import { Inventory } from './inventory.entity';
-import { User } from "../auth/user.entity";
+import { User } from '../auth/user.entity';
 
 @Injectable()
 export class InventoryService {
@@ -13,8 +13,15 @@ export class InventoryService {
     private inventoryRepository: InventoryRepository,
   ) {}
 
-  async getAllInventorys(): Promise<Inventory[]> {
-    return this.inventoryRepository.find();
+  async getAllInventorys(user: User): Promise<Inventory[]> {
+    const query = this.inventoryRepository.createQueryBuilder('inventory');
+
+    query.where('inventory.userId = :userId', { userId: user.id });
+
+    const inventorys = await query.getMany();
+
+    return inventorys;
+    // return this.inventoryRepository.find();
   }
 
   async getInventoryById(id: number): Promise<Inventory> {

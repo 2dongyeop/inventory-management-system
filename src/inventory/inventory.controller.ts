@@ -6,18 +6,19 @@ import {
   Param,
   ParseIntPipe,
   Patch,
-  Post, UseGuards,
+  Post,
+  UseGuards,
   UsePipes,
-  ValidationPipe
-} from "@nestjs/common";
+  ValidationPipe,
+} from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
 import { InventoryStatusValidationPipe } from './pipes/inventory-status-validation.pipe';
 import { Inventory } from './inventory.entity';
-import { AuthGuard } from "@nestjs/passport";
-import { GetUser } from "../auth/get-user.decorator";
-import { User } from "../auth/user.entity";
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from '../auth/get-user.decorator';
+import { User } from '../auth/user.entity';
 
 @Controller('inventorys')
 @UseGuards(AuthGuard())
@@ -31,8 +32,8 @@ export class InventoryController {
   }
 
   @Get()
-  getAllInventorys(): Promise<Inventory[]> {
-    return this.inventoryService.getAllInventorys();
+  getAllInventorys(@GetUser() user: User): Promise<Inventory[]> {
+    return this.inventoryService.getAllInventorys(user);
   }
 
   @Get('/:id')
