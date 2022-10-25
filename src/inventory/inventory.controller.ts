@@ -2,15 +2,15 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, Logger,
   Param,
   ParseIntPipe,
   Patch,
   Post,
   UseGuards,
   UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+  ValidationPipe
+} from "@nestjs/common";
 import { InventoryService } from './inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -23,6 +23,7 @@ import { User } from '../auth/user.entity';
 @Controller('inventorys')
 @UseGuards(AuthGuard())
 export class InventoryController {
+  private logger = new Logger('InventoryController');
   constructor(private inventoryService: InventoryService) {
     /**
      * Service를 Controller에서 이용할 수 있도록 의존성 주입
@@ -33,6 +34,7 @@ export class InventoryController {
 
   @Get()
   getAllInventorys(@GetUser() user: User): Promise<Inventory[]> {
+    this.logger.verbose(`User ${user.username} trying to get all inventorys`);
     return this.inventoryService.getAllInventorys(user);
   }
 
