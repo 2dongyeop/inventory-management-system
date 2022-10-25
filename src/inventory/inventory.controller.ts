@@ -49,6 +49,8 @@ export class InventoryController {
     @Body() createInventoryDto: CreateInventoryDto,
     @GetUser() user: User,
   ): Promise<Inventory> {
+    this.logger.verbose(`User ${user.username} creating a new inventory.
+     Payload: ${JSON.stringify(createInventoryDto)} `);
     return this.inventoryService.createInventory(createInventoryDto, user);
   }
 
