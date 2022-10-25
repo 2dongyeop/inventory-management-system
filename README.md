@@ -86,7 +86,7 @@
 
 <br/>
 
-- `src/auth/auth.module.ts`
+- `src/auth/jwt.strategy.ts`
   ```typescript
   @Injectable()
   export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -116,6 +116,44 @@
 
   ```
 
+
+<br/>
+
+- `config/default.yml`
+  ```yml
+  server:
+    port: 3000
+
+  db:
+    type: 'postgres'
+    port: 15432 
+    database: '[위에서 작성한 dbname]'
+
+  jwt:
+    expiresIn: 3600
+  ```
+
+<br/>
+
+- `config/development.yml`
+  ```yml
+  db:
+    host: 'localhost'
+    username: '[위에서 작성한 username]'
+    password: '[위에서 작성한 password]'
+    synchronize: true
+
+  jwt:
+    secret: '[위에서 작성한 시크릿 키]'
+  ```
+
+<br/>
+
+- `production.yml`
+  ```yml
+  db:
+    synchronize: false
+  ```
 
 <br/>
 
