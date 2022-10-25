@@ -16,18 +16,22 @@
 - `src/configs/typeorm.config.ts`
   ```typescript
   import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+  import * as config from 'config';
 
-  export const typeormConfig: TypeOrmModuleOptions = {
-    type: 'postgres',
-    host: 'localhost',
-    port: 15432, //postgres's default port : 5432 
-    username: '[username]',
-    password: '[password]',
-    database: '[dbname]',
+  const dbConfig = config.get('db');
+
+  export const typeORMConfig: TypeOrmModuleOptions = {
+    type: dbConfig.type,
+    host: process.env.RDS_HOSTNAME || dbConfig.host,
+    port: process.env.RDS_PORT || dbConfig.port,
+    username: process.env.RDS_USERNAME || dbConfig.username,
+    password: process.env.RDS_PASSWORD || dbConfig.password,
+    database: process.env.RDS_DB_NAME || dbConfig.database,
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
 
-    synchronize: true,
+    synchronize: dbConfig.synchronize,
   };
+
   ```
 
 <br/>
@@ -64,13 +68,24 @@
 
 - `src/auth/auth.module.ts`
   ```typescript
+  import { Module } from '@nestjs/common';
+  import { AuthController } from './auth.controller';
+  import { AuthService } from './auth.service';
+  import { TypeOrmModule } from '@nestjs/typeorm';
+  import { User } from './user.entity';
+  import { JwtModule } from '@nestjs/jwt';
+  import { PassportModule } from '@nestjs/passport';
+  import { JwtStrategy } from './jwt.strategy';
+  import * as config from 'config';
+
+  const jwtConfig = config.get('jwt');
   @Module({
     imports: [
       PassportModule.register({ defaultStrategy: 'jwt' }),
       JwtModule.register({
-        secret: '[자신이 원하는 시크릿 키]', //토큰 생성시 사용.
+        secret: process.env.JWT_SECRET || jwtConfig.secret, //토큰 생성시 사용.
         signOptions: {
-          expiresIn: 60 * 60,
+          expiresIn: jwtConfig.expiresIn,
         },
       }),
       TypeOrmModule.forFeature([User]),
@@ -80,9 +95,8 @@
     exports: [JwtStrategy, PassportModule],
   })
   export class AuthModule {}
+
   ```
-
-
 
 <br/>
 
@@ -95,7 +109,7 @@
       private userRepository: UserRepository,
     ) {
       super({
-        secretOrKey: '[위에서 작성한 시크릿 키와 동일하게 입력]', // 토큰이 유효한지 체크할 때 사용.
+        secretOrKey: process.env.JWT_SECRET || config.get('jwt.secret'), // 토큰이 유효한지 체크할 때 사용.
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), // 토큰을 AuthHeader에서 BearerToken 타입으로 가져옴.
       });
     }
@@ -115,7 +129,6 @@
   }
 
   ```
-
 
 <br/>
 
