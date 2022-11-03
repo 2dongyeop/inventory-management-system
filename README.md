@@ -8,50 +8,10 @@
 <br/>
 
 ## Document
+- [Installation & Run](https://github.com/2dongyeop/inventory-management-system/blob/main/document/installation.md)
 - [API 설계](https://github.com/2dongyeop/inventory-management-system/blob/main/document/API-list.md)
 - [Setting file](https://github.com/2dongyeop/inventory-management-system/blob/main/document/ignorefile.md)
 - [Troubleshooting](https://velog.io/@dongvelop/series/nestjs)
-
-
-<br/>
-
-<br/>
-
-## Installation
-
-```bash
-$ npm install
-```
-
-<br/>
-
-## Running the app
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-<br/>
-
-## Test
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
 
 <br/>
 
