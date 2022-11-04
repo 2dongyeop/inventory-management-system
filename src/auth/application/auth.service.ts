@@ -3,15 +3,14 @@ import {
   ConflictException,
   Injectable,
   InternalServerErrorException,
-  UnauthorizedException
-} from "@nestjs/common";
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '../persistence/user.repository';
+import { UserRepository } from '../../user/persistence/user.repository';
 import { AuthCredentialsDto } from '../web/dto/auth-credential.dto';
-import { User } from '../persistence/user.entity';
+import { User } from '../../user/persistence/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { AuthSignInDto } from "../web/dto/auth-signin.dto";
+import { AuthSignInDto } from '../web/dto/auth-signin.dto';
 
 @Injectable()
 export class AuthService {

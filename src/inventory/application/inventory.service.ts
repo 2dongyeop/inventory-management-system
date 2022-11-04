@@ -4,7 +4,7 @@ import { CreateInventoryDto } from '../web/dto/create-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryRepository } from '../persistence/inventory.repository';
 import { Inventory } from '../persistence/inventory.entity';
-import { User } from '../../auth/persistence/user.entity';
+import { User } from '../../user/persistence/user.entity';
 import { ReadInventoryDto } from '../web/dto/read-inventory.dto';
 
 @Injectable()

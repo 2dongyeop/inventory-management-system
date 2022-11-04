@@ -19,7 +19,7 @@ import { InventoryStatusValidationPipe } from '../pipes/inventory-status-validat
 import { Inventory } from '../persistence/inventory.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../../auth/web/get-user.decorator';
-import { User } from '../../auth/persistence/user.entity';
+import { User } from '../../user/persistence/user.entity';
 import { ReadInventoryDto } from './dto/read-inventory.dto';
 
 @Controller('inventorys')
