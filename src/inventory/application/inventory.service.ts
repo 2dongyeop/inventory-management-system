@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { InventoryRepository } from '../persistence/inventory.repository';
 import { Inventory } from '../persistence/inventory.entity';
 import { User } from '../../auth/persistence/user.entity';
+import { ReadInventoryDto } from '../web/dto/read-inventory.dto';
 
 @Injectable()
 export class InventoryService {
@@ -13,7 +14,7 @@ export class InventoryService {
     private inventoryRepository: InventoryRepository,
   ) {}
 
-  async getAllInventorys(user: User): Promise<Inventory[]> {
+  async getAllInventorys(user: User): Promise<ReadInventoryDto[]> {
     const query = this.inventoryRepository.createQueryBuilder('inventory');
 
     query.where('inventory.userId = :userId', { userId: user.id });
@@ -23,7 +24,7 @@ export class InventoryService {
     return inventorys;
   }
 
-  async getInventoryById(id: number): Promise<Inventory> {
+  async getInventoryById(id: number): Promise<ReadInventoryDto> {
     const found = await this.inventoryRepository.findOne({ where: { id: id } });
 
     if (!found) {
@@ -53,7 +54,7 @@ export class InventoryService {
   async updateInventoryStatus(
     id: number,
     status: InventoryStatus,
-  ): Promise<Inventory> {
+  ): Promise<ReadInventoryDto> {
     const inventory = await this.getInventoryById(id);
 
     inventory.status = status;
@@ -65,7 +66,7 @@ export class InventoryService {
   async updateInventoryDescription(
     id: number,
     description: string,
-  ): Promise<Inventory> {
+  ): Promise<ReadInventoryDto> {
     const inventory = await this.getInventoryById(id);
 
     inventory.description = description;
@@ -77,7 +78,7 @@ export class InventoryService {
   async updateInventoryManufacturer(
     id: number,
     manufacturer: string,
-  ): Promise<Inventory> {
+  ): Promise<ReadInventoryDto> {
     const inventory = await this.getInventoryById(id);
 
     inventory.manufacturer = manufacturer;

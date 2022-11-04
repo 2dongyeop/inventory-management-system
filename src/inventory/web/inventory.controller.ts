@@ -2,15 +2,16 @@ import {
   Body,
   Controller,
   Delete,
-  Get, Logger,
+  Get,
+  Logger,
   Param,
   ParseIntPipe,
   Patch,
   Post,
   UseGuards,
   UsePipes,
-  ValidationPipe
-} from "@nestjs/common";
+  ValidationPipe,
+} from '@nestjs/common';
 import { InventoryService } from '../application/inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
@@ -19,6 +20,7 @@ import { Inventory } from '../persistence/inventory.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../../auth/web/get-user.decorator';
 import { User } from '../../auth/persistence/user.entity';
+import { ReadInventoryDto } from './dto/read-inventory.dto';
 
 @Controller('inventorys')
 @UseGuards(AuthGuard())
@@ -33,13 +35,13 @@ export class InventoryController {
   }
 
   @Get()
-  getAllInventorys(@GetUser() user: User): Promise<Inventory[]> {
+  getAllInventorys(@GetUser() user: User): Promise<ReadInventoryDto[]> {
     this.logger.verbose(`User ${user.username} trying to get all inventorys`);
     return this.inventoryService.getAllInventorys(user);
   }
 
   @Get('/:id')
-  getInventoryById(@Param('id') id: number): Promise<Inventory> {
+  getInventoryById(@Param('id') id: number): Promise<ReadInventoryDto> {
     return this.inventoryService.getInventoryById(id);
   }
 
