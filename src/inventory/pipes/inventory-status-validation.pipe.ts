@@ -9,11 +9,13 @@ export class InventoryStatusValidationPipe implements PipeTransform {
     return index !== -1;
   }
 
-  transform(value: any, metadata: ArgumentMetadata) {
+  transform(value: string, metadata: ArgumentMetadata) {
     value = value.toUpperCase();
 
     if (!this.isStatusValid(value)) {
-      throw new BadRequestException(`${value}은(는) 선택지에 없는 상태 옵션입니다.`);
+      throw new BadRequestException(
+        `${value}은(는) 선택지에 없는 상태 옵션입니다.`,
+      );
     }
 
     return value;
