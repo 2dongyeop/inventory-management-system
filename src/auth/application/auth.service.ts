@@ -10,6 +10,7 @@ import { AuthCredentialsDto } from '../web/dto/auth-credential.dto';
 import { User } from '../persistence/user.entity';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { AuthSignInDto } from "../web/dto/auth-signin.dto";
 
 @Injectable()
 export class AuthService {
@@ -40,10 +41,8 @@ export class AuthService {
     }
   }
 
-  async signIn(
-    authCredentialsDto: AuthCredentialsDto,
-  ): Promise<{ accessToken: string }> {
-    const { username, password } = authCredentialsDto;
+  async signIn(authSignInDto: AuthSignInDto): Promise<{ accessToken: string }> {
+    const { username, password } = authSignInDto;
     const user = await this.userRepository.findOne({
       where: { username: username },
     });
