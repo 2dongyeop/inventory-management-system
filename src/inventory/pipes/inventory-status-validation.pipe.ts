@@ -1,12 +1,8 @@
 import { ArgumentMetadata, BadRequestException, PipeTransform } from '@nestjs/common';
-import { InventoryStatus } from '../inventory-status.enum';
+import { InventoryStatus } from '../web/inventory-status.enum';
 
 export class InventoryStatusValidationPipe implements PipeTransform {
-
-  readonly StatusOptions = [
-    InventoryStatus.NONSALE,
-    InventoryStatus.ONSALE
-  ]
+  readonly StatusOptions = [InventoryStatus.NONSALE, InventoryStatus.ONSALE];
 
   private isStatusValid(status: any) {
     const index = this.StatusOptions.indexOf(status);

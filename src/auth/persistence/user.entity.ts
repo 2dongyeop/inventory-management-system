@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   Unique
 } from "typeorm";
-import { Inventory } from "../inventory/inventory.entity";
+import { Inventory } from "../../inventory/persistence/inventory.entity";
 import { type } from "os";
 
 @Entity()

@@ -11,14 +11,14 @@ import {
   UsePipes,
   ValidationPipe
 } from "@nestjs/common";
-import { InventoryService } from './inventory.service';
+import { InventoryService } from '../application/inventory.service';
 import { InventoryStatus } from './inventory-status.enum';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
-import { InventoryStatusValidationPipe } from './pipes/inventory-status-validation.pipe';
-import { Inventory } from './inventory.entity';
+import { InventoryStatusValidationPipe } from '../pipes/inventory-status-validation.pipe';
+import { Inventory } from '../persistence/inventory.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from '../auth/get-user.decorator';
-import { User } from '../auth/user.entity';
+import { GetUser } from '../../auth/web/get-user.decorator';
+import { User } from '../../auth/persistence/user.entity';
 
 @Controller('inventorys')
 @UseGuards(AuthGuard())

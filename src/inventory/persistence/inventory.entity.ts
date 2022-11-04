@@ -5,8 +5,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { InventoryStatus } from './inventory-status.enum';
-import { User } from '../auth/user.entity';
+import { InventoryStatus } from '../web/inventory-status.enum';
+import { User } from '../../auth/persistence/user.entity';
 
 @Entity()
 export class Inventory extends BaseEntity {

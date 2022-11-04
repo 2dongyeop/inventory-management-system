@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InventoryStatus } from './inventory-status.enum';
-import { CreateInventoryDto } from './dto/create-inventory.dto';
+import { InventoryStatus } from '../web/inventory-status.enum';
+import { CreateInventoryDto } from '../web/dto/create-inventory.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InventoryRepository } from './inventory.repository';
-import { Inventory } from './inventory.entity';
-import { User } from '../auth/user.entity';
+import { InventoryRepository } from '../persistence/inventory.repository';
+import { Inventory } from '../persistence/inventory.entity';
+import { User } from '../../auth/persistence/user.entity';
 
 @Injectable()
 export class InventoryService {
@@ -21,7 +21,6 @@ export class InventoryService {
     const inventorys = await query.getMany();
 
     return inventorys;
-    // return this.inventoryRepository.find();
   }
 
   async getInventoryById(id: number): Promise<Inventory> {
@@ -55,10 +54,10 @@ export class InventoryService {
     id: number,
     status: InventoryStatus,
   ): Promise<Inventory> {
-    const inventory = this.getInventoryById(id);
+    const inventory = await this.getInventoryById(id);
 
-    (await inventory).status = status;
-    await this.inventoryRepository.save(await inventory);
+    inventory.status = status;
+    await this.inventoryRepository.save(inventory);
 
     return inventory;
   }
@@ -67,10 +66,10 @@ export class InventoryService {
     id: number,
     description: string,
   ): Promise<Inventory> {
-    const inventory = this.getInventoryById(id);
+    const inventory = await this.getInventoryById(id);
 
-    (await inventory).description = description;
-    await this.inventoryRepository.save(await inventory);
+    inventory.description = description;
+    await this.inventoryRepository.save(inventory);
 
     return inventory;
   }
@@ -79,10 +78,10 @@ export class InventoryService {
     id: number,
     manufacturer: string,
   ): Promise<Inventory> {
-    const inventory = this.getInventoryById(id);
+    const inventory = await this.getInventoryById(id);
 
-    (await inventory).manufacturer = manufacturer;
-    await this.inventoryRepository.save(await inventory);
+    inventory.manufacturer = manufacturer;
+    await this.inventoryRepository.save(inventory);
 
     return inventory;
   }
