@@ -1,9 +1,10 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
-  UnauthorizedException,
-} from '@nestjs/common';
+  UnauthorizedException
+} from "@nestjs/common";
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from '../persistence/user.repository';
 import { AuthCredentialsDto } from '../web/dto/auth-credential.dto';
@@ -54,7 +55,7 @@ export class AuthService {
 
       return { accessToken };
     } else {
-      throw new UnauthorizedException('logIn failed');
+      throw new BadRequestException('logIn failed');
     }
   }
 }
