@@ -23,4 +23,14 @@ export class UserService {
 
     return user;
   }
+
+  async deleteUser(id: number): Promise<void> {
+    const result = await this.userRepository.delete(id);
+
+    if (result.affected == 0) {
+      throw new NotFoundException(`해당 Id를 가진 회원은 존재하지 않습니다.`);
+    }
+
+    console.log('result', result);
+  }
 }
