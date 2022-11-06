@@ -87,72 +87,18 @@
 
 <br/>
 
-- ### 재고 수정
+- ### 재고 수정 : `PATCH /inventorys/:id`
     - 아래 수정 과정은 모두 `signin`을 통해 얻은 토큰을 요청과 함께 보내야 함.
-    - #### 상태 수정 : `PATCH /inventorys/:id/status`
-        - `status`는 [InventoryStatus](https://github.com/2dongyeop/inventory-management-system/blob/main/src/inventory/inventory-status.enum.ts)에 정의된 값이어야 함.
-        - request
-            ```JSON
-                {
-                    "status": "ONSALE"
-                }
-            ```
-        - response
-            - 정상 동작일 경우
-                ```JSON
-                    {
-                        "id": 1,
-                        "name": "[name]",
-                        "price": "[price]",
-                        "description": null,
-                        "manufacturer": null,
-                        "status": "ONSALE"
-                    }
-                ```
-        
-            - 400 : 유효성 검사를 통과하지 못했을 경우
-    
-    <br/>
+    - `status`, `description`, `manufacturer` 중 바꾸고 싶은 컬럼과 값을 넣는다.
+    - request 
+        ```JSON
+            {
+                "description": "쿼리빌더로 바꿔보자"
+            }
+        ```
+    - response
+        - 400 : Bad request
 
-    - #### 설명 수정 : `PATCH /inventorys/:id/descriptions`
-        - request
-            ```JSON
-                {
-                    "descriptions": "삭제 대상"
-                }
-            ```
-        - response
-            ```JSON
-                {
-                    "id": 1,
-                    "name": "[name]",
-                    "price": "[price]",
-                    "description": "삭제 대상",
-                    "manufacturer": null,
-                    "status": "ONSALE"
-                }
-            ```
-    
-    <br/>
-
-    - #### 제조업체 수정 : `PATCH /inventorys/:id/manufacturers`
-        - request
-            ```JSON
-                {
-                    "manufacturer": "한밭 제과"
-                }
-            ```
-        - response
-            ```JSON
-                {
-                    "id": 1,
-                    "name": "[name]",
-                    "price": "[price]",
-                    "description": "삭제 대상",
-                    "manufacturer": "한밭 제과",
-                    "status": "ONSALE"
-                }
-            ```
 
 <br/>
 
