@@ -11,7 +11,7 @@
             }
         ```
     - response : 잘못된 요청일 경우만 존재
-        - 400 : 유효성 검사에 적합하지 않은 경우.
+        - 400 : Bad request
 
 <br/>
 
@@ -30,7 +30,27 @@
                     "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRsZWhkZHVxMyIsImlhdCI6MTY2NzM5NTM4OSwiZXhwIjoxNjY3Mzk4OTg5fQ.f6qaf2MwXPRu-SYAGG6T5Y9EQ1OStDnaryZa3ROSqOw"
                 }
             ```
-        - 401 : login failed
+        - 400 : Bad request
+
+<br/>
+
+<br/>
+
+## Accessing User Information
+- ### 유저 정보 수정 : `PATCH /users/:id/username`
+    - request
+        ```JSON
+            {
+                "username": "[username]"
+            }
+        ```
+
+<br/>
+
+- ### 유저 정보 삭제 : `DELETE /users/:id`
+    - response 작성 필요!
+
+<br/>
 
 <br/>
 
