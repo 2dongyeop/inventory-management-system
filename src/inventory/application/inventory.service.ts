@@ -1,18 +1,20 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { InventoryStatus } from '../web/inventory-status.enum';
-import { CreateInventoryDto } from '../web/dto/create-inventory.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { InventoryRepository } from '../persistence/inventory.repository';
-import { Inventory } from '../persistence/inventory.entity';
-import { User } from '../../user/persistence/user.entity';
-import { ReadInventoryDto } from '../web/dto/read-inventory.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { InventoryStatus } from "../web/inventory-status.enum";
+import { CreateInventoryDto } from "../web/dto/create-inventory.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { InventoryRepository } from "../persistence/inventory.repository";
+import { Inventory } from "../persistence/inventory.entity";
+import { User } from "../../user/persistence/user.entity";
+import { ReadInventoryDto } from "../web/dto/read-inventory.dto";
+import { UpdateInventoryDto } from "../web/dto/update-inventory.dto";
 
 @Injectable()
 export class InventoryService {
   constructor(
     @InjectRepository(Inventory)
-    private inventoryRepository: InventoryRepository,
-  ) {}
+    private inventoryRepository: InventoryRepository
+  ) {
+  }
 
   async getAllInventorys(user: User): Promise<ReadInventoryDto[]> {
     const query = this.inventoryRepository.createQueryBuilder('inventory');
@@ -51,42 +53,6 @@ export class InventoryService {
     return inventory;
   }
 
-  async updateInventoryStatus(
-    id: number,
-    status: InventoryStatus,
-  ): Promise<ReadInventoryDto> {
-    const inventory = await this.getInventoryById(id);
-
-    inventory.status = status;
-    await this.inventoryRepository.save(inventory);
-
-    return inventory;
-  }
-
-  async updateInventoryDescription(
-    id: number,
-    description: string,
-  ): Promise<ReadInventoryDto> {
-    const inventory = await this.getInventoryById(id);
-
-    inventory.description = description;
-    await this.inventoryRepository.save(inventory);
-
-    return inventory;
-  }
-
-  async updateInventoryManufacturer(
-    id: number,
-    manufacturer: string,
-  ): Promise<ReadInventoryDto> {
-    const inventory = await this.getInventoryById(id);
-
-    inventory.manufacturer = manufacturer;
-    await this.inventoryRepository.save(inventory);
-
-    return inventory;
-  }
-
   async deleteInventory(id: number): Promise<void> {
     const result = await this.inventoryRepository.delete(id);
 
@@ -95,5 +61,18 @@ export class InventoryService {
     }
 
     console.log('result', result);
+  }
+
+  async updateInventory(id: number, updateInventoryDto: UpdateInventoryDto) {
+    const inventory = await this.getInventoryById(id);
+
+    const { status, description, manufacturer } = updateInventoryDto;
+
+    if (status !== null) inventory.status = status;
+    if (description !== null) inventory.description = description;
+    if (manufacturer !== null) inventory.manufacturer = manufacturer;
+
+    await this.inventoryRepository.save(inventory);
+    return inventory;
   }
 }

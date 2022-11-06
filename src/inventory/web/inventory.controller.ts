@@ -21,6 +21,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../../auth/web/get-user.decorator';
 import { User } from '../../user/persistence/user.entity';
 import { ReadInventoryDto } from './dto/read-inventory.dto';
+import { UpdateInventoryDto } from "./dto/update-inventory.dto";
 
 @Controller('inventorys')
 @UseGuards(AuthGuard())
@@ -56,32 +57,16 @@ export class InventoryController {
     return this.inventoryService.createInventory(createInventoryDto, user);
   }
 
-  @Patch('/:id/status')
-  updateInventoryStatus(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('status', InventoryStatusValidationPipe) status: InventoryStatus,
-  ) {
-    return this.inventoryService.updateInventoryStatus(id, status);
-  }
-
-  @Patch('/:id/descriptions')
-  updateInventoryDescription(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('description') description: string,
-  ) {
-    return this.inventoryService.updateInventoryDescription(id, description);
-  }
-
-  @Patch('/:id/manufacturers')
-  updateInventoryManufacturer(
-    @Param('id', ParseIntPipe) id: number,
-    @Body('manufacturer') manufacturer: string,
-  ) {
-    return this.inventoryService.updateInventoryManufacturer(id, manufacturer);
-  }
-
   @Delete('/:id')
   deleteInventory(@Param('id', ParseIntPipe) id: number): void {
     this.inventoryService.deleteInventory(id);
+  }
+
+  @Patch('/:id')
+  updateInventory(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) updateInventoryDto: UpdateInventoryDto,
+  ): void {
+    this.inventoryService.updateInventory(id, updateInventoryDto);
   }
 }
