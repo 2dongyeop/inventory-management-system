@@ -48,7 +48,12 @@
 <br/>
 
 - ### 유저 정보 삭제 : `DELETE /users/:id`
-    - response 작성 필요!
+    - request
+        ```JSON
+            {
+                "username": "[username]"
+            }
+        ```
 
 <br/>
 
