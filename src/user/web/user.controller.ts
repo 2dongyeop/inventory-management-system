@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { UserService } from '../application/user.service';
 import { UserDeleteDto } from './dto/user-delete.dto';
+import { UserUpdateDto } from "./dto/user-update.dto";
 
 @Controller('users')
 export class UserController {
@@ -17,9 +18,9 @@ export class UserController {
   @Patch('/:id/username')
   updateUserName(
     @Param('id', ParseIntPipe) id: number,
-    @Body('username') username: string,
+    @Body(ValidationPipe) userUpdateDto: UserUpdateDto,
   ) {
-    return this.userService.updateUserName(id, username);
+    return this.userService.updateUserName(id, userUpdateDto);
   }
 
   @Delete('/:id')

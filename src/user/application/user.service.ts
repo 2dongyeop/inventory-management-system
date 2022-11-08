@@ -13,23 +13,31 @@ export class UserService {
   ) {
   }
 
-  async updateUserName(id: number, username: string): Promise<UserUpdateDto> {
-    const user = await this.userRepository.findOne({ where: { id: id } });
+  async updateUserName(
+    id: number,
+    userUpdateDto: UserUpdateDto,
+  ): Promise<UserUpdateDto> {
+    const { username } = userUpdateDto;
+
+    const user = await this.userRepository.findOne({
+      where: { id: id, username: username },
+    });
 
     if (!user) {
       throw new NotFoundException('해당 Id를 가진 회원은 존재하지 않습니다.');
+    } else {
+      user.username = username;
+      await this.userRepository.save(user);
     }
-
-    user.username = username;
-    await this.userRepository.save(user);
 
     return user;
   }
 
   async deleteUser(id: number, userDeleteDto: UserDeleteDto): Promise<void> {
-    const { username, password } = userDeleteDto;
+    const { username } = userDeleteDto;
+
     const user = await this.userRepository.findOne({
-      where: { username: username }
+      where: { id: id, username: username },
     });
 
     let result;
