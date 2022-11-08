@@ -3,13 +3,15 @@ import { UserUpdateDto } from '../web/dto/user-update.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../persistence/user.entity';
 import { UserRepository } from '../persistence/user.repository';
+import { UserDeleteDto } from '../web/dto/user-delete.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: UserRepository,
-  ) {}
+    private userRepository: UserRepository
+  ) {
+  }
 
   async updateUserName(id: number, username: string): Promise<UserUpdateDto> {
     const user = await this.userRepository.findOne({ where: { id: id } });
@@ -24,10 +26,17 @@ export class UserService {
     return user;
   }
 
-  async deleteUser(id: number): Promise<void> {
-    const result = await this.userRepository.delete(id);
+  async deleteUser(id: number, userDeleteDto: UserDeleteDto): Promise<void> {
+    const { username, password } = userDeleteDto;
+    const user = await this.userRepository.findOne({
+      where: { username: username }
+    });
 
-    if (result.affected == 0) {
+    let result;
+    if (user) {
+      result = await this.userRepository.delete(id);
+    } else {
+      //result.affected == 0
       throw new NotFoundException(`해당 Id를 가진 회원은 존재하지 않습니다.`);
     }
 

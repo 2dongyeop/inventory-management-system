@@ -5,8 +5,10 @@ import {
   Param,
   ParseIntPipe,
   Patch,
+  ValidationPipe,
 } from '@nestjs/common';
 import { UserService } from '../application/user.service';
+import { UserDeleteDto } from './dto/user-delete.dto';
 
 @Controller('users')
 export class UserController {
@@ -21,7 +23,10 @@ export class UserController {
   }
 
   @Delete('/:id')
-  deleteUser(@Param('id', ParseIntPipe) id: number): void {
-    this.userService.deleteUser(id);
+  deleteUser(
+    @Param('id', ParseIntPipe) id: number,
+    @Body(ValidationPipe) userDeleteDto: UserDeleteDto,
+  ): void {
+    this.userService.deleteUser(id, userDeleteDto);
   }
 }
