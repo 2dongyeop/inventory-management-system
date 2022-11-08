@@ -1,12 +1,12 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
-import { InventoryStatus } from "../web/inventory-status.enum";
-import { CreateInventoryDto } from "../web/dto/create-inventory.dto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { InventoryRepository } from "../persistence/inventory.repository";
-import { Inventory } from "../persistence/inventory.entity";
-import { User } from "../../user/persistence/user.entity";
-import { ReadInventoryDto } from "../web/dto/read-inventory.dto";
-import { UpdateInventoryDto } from "../web/dto/update-inventory.dto";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InventoryStatus } from '../web/inventory-status.enum';
+import { CreateInventoryDto } from '../web/dto/create-inventory.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { InventoryRepository } from '../persistence/inventory.repository';
+import { Inventory } from '../persistence/inventory.entity';
+import { User } from '../../user/persistence/user.entity';
+import { ReadInventoryDto } from '../web/dto/read-inventory.dto';
+import { UpdateInventoryDto } from '../web/dto/update-inventory.dto';
 
 @Injectable()
 export class InventoryService {

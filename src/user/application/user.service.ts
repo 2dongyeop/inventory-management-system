@@ -20,7 +20,7 @@ export class UserService {
     const { username } = userUpdateDto;
 
     const user = await this.userRepository.findOne({
-      where: { id: id, username: username },
+      where: { id: id },
     });
 
     if (!user) {
