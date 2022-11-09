@@ -32,10 +32,6 @@ export class Inventory extends BaseEntity {
   @Column()
   status: InventoryStatus;
 
-  @ManyToOne(
-    (type) => User,
-    (user) => user.inventorys,
-    { eager: false }
-  )
+  @ManyToOne((type) => User, (user) => user.inventorys, { eager: false })
   user: User;
 }

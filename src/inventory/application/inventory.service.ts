@@ -13,13 +13,12 @@ export class InventoryService {
   constructor(
     @InjectRepository(Inventory)
     private inventoryRepository: InventoryRepository
-  ) {
-  }
+  ) {}
 
   async getAllInventorys(user: User): Promise<ReadInventoryDto[]> {
     const query = this.inventoryRepository.createQueryBuilder('inventory');
 
-    query.where('inventory.userId = :userId', { userId: user.id });
+    query.where('inventory.user_Id = :user_Id', { user_Id: user.id });
 
     const inventorys = await query.getMany();
 
@@ -64,15 +63,11 @@ export class InventoryService {
   }
 
   async updateInventory(id: number, updateInventoryDto: UpdateInventoryDto) {
-    const inventory = await this.getInventoryById(id);
-
-    const { status, description, manufacturer } = updateInventoryDto;
-
-    if (status !== null) inventory.status = status;
-    if (description !== null) inventory.description = description;
-    if (manufacturer !== null) inventory.manufacturer = manufacturer;
-
-    await this.inventoryRepository.save(inventory);
-    return inventory;
+    await this.inventoryRepository
+      .createQueryBuilder()
+      .update(Inventory)
+      .set(updateInventoryDto.generateChanges())
+      .where('id = :id', { id })
+      .execute();
   }
 }

@@ -61,10 +61,10 @@ export class InventoryController {
   }
 
   @Patch('/:id')
-  updateInventory(
+  async updateInventory(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) updateInventoryDto: UpdateInventoryDto,
-  ): void {
-    this.inventoryService.updateInventory(id, updateInventoryDto);
+  ): Promise<void> {
+    await this.inventoryService.updateInventory(id, updateInventoryDto);
   }
 }
