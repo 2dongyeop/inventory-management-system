@@ -4,30 +4,33 @@ import {
   Delete,
   Param,
   ParseIntPipe,
-  Patch, UseGuards,
-  ValidationPipe
-} from "@nestjs/common";
+  Patch,
+  UseGuards,
+  ValidationPipe,
+} from '@nestjs/common';
 import { UserService } from '../application/user.service';
 import { UserDeleteDto } from './dto/user-delete.dto';
-import { UserUpdateDto } from "./dto/user-update.dto";
-import { GetUser } from "../../auth/web/get-user.decorator";
-import { User } from "../persistence/user.entity";
-import { AuthGuard } from "@nestjs/passport";
+import { UserUpdateDto } from './dto/user-update.dto';
+import { GetUser } from '../../auth/web/get-user.decorator';
+import { User } from '../persistence/user.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
   constructor(private userService: UserService) {}
 
   @Patch('/:id/username')
+  @UseGuards(AuthGuard('jwt'))
   updateUserName(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) userUpdateDto: UserUpdateDto,
+    @GetUser() user: User,
   ) {
-    return this.userService.updateUserName(id, userUpdateDto);
+    return this.userService.updateUserName(id, userUpdateDto, user);
   }
 
   @Delete('/:id')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   deleteUser(
     @Param('id', ParseIntPipe) id: number,
     @Body(ValidationPipe) userDeleteDto: UserDeleteDto,

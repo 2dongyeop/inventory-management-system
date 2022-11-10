@@ -16,18 +16,19 @@ export class UserService {
   async updateUserName(
     id: number,
     userUpdateDto: UserUpdateDto,
-  ): Promise<UserUpdateDto> {
-    const { username } = userUpdateDto;
+    user: User,
+  ): Promise<User> {
+    const { username, password, updateUsername } = userUpdateDto;
 
-    const user = await this.userRepository.findOne({
-      where: { id: id },
-    });
-
-    if (!user) {
-      throw new NotFoundException('해당 Id를 가진 회원은 존재하지 않습니다.');
-    } else {
-      user.username = username;
+    if (
+      user &&
+      user.username === username &&
+      bcrypt.compare(password, user.password)
+    ) {
+      user.username = updateUsername;
       await this.userRepository.save(user);
+    } else {
+      throw new NotFoundException(`해당 Id를 가진 회원은 존재하지 않습니다.`);
     }
 
     return user;
