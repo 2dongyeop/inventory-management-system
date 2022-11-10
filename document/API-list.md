@@ -61,7 +61,7 @@
         ```JSON
             {
                 "username": "[username]",
-                "password": "[password]
+                "password": "[password]"
             }
         ```
     - response
