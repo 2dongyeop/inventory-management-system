@@ -27,7 +27,7 @@
         - 정상 동작일 경우 : 토큰을 제공
             ```JSON
                 {
-                    "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRsZWhkZHVxMyIsImlhdCI6MTY2NzM5NTM4OSwiZXhwIjoxNjY3Mzk4OTg5fQ.f6qaf2MwXPRu-SYAGG6T5Y9EQ1OStDnaryZa3ROSqOw"
+                    "accessToken": "@@@.@@@.@@@"
                 }
             ```
         - 400 : Bad request
