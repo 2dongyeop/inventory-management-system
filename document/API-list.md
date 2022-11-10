@@ -12,6 +12,7 @@
         ```
     - response : 잘못된 요청일 경우만 존재
         - 400 : Bad request
+        - 409 : Existing username
 
 <br/>
 
@@ -30,7 +31,7 @@
                     "accessToken": "@@@.@@@.@@@"
                 }
             ```
-        - 400 : Bad request
+        - 400 : Bad request, logIn failed
 
 <br/>
 
@@ -50,7 +51,7 @@
     - response
       - 400 : logIn failed
       - 401 : Unauthorized
-      - 404 : id를 잘못 입력했을 경우
+      - 404 : 잘못된 id 입력
 
 <br/>
 
@@ -65,6 +66,7 @@
         ```
     - response
       - 401 : Unauthorized
+      - 404 : 잘못된 id 입력
 
 <br/>
 
@@ -82,6 +84,7 @@
         ```
     - response
         - 400 : 요청에 Null이 포함되어 있을 경우
+        - 401 : Unauthorized
 
 <br/>
 
@@ -99,6 +102,7 @@
                     "status": "NONSALE"
                 }
             ```
+        - 401 : Unauthorized
         - 404 : 해당 id를 가진 재고가 존재하지 않을 경우
 
 <br/>
@@ -114,6 +118,7 @@
         ```
     - response
         - 400 : Bad request
+        - 401 : Unauthorized   
 
 
 <br/>
@@ -122,3 +127,4 @@
     - `signin`을 통해 얻은 토큰을 요청과 함께 보내야 함.
     - response
         - 정상 동작일 경우 : 응답 없음.
+        - 401 : Unauthorized
