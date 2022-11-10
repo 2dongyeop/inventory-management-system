@@ -12,7 +12,7 @@ import { UpdateInventoryDto } from '../web/dto/update-inventory.dto';
 export class InventoryService {
   constructor(
     @InjectRepository(Inventory)
-    private inventoryRepository: InventoryRepository
+    private inventoryRepository: InventoryRepository,
   ) {}
 
   async getAllInventorys(user: User): Promise<ReadInventoryDto[]> {
@@ -38,7 +38,7 @@ export class InventoryService {
   async createInventory(
     createInventoryDto: CreateInventoryDto,
     user: User,
-  ): Promise<Inventory> {
+  ): Promise<CreateInventoryDto> {
     const { name, price } = createInventoryDto;
 
     const inventory: Inventory = this.inventoryRepository.create({
@@ -54,6 +54,12 @@ export class InventoryService {
 
   async deleteInventory(id: number): Promise<void> {
     const result = await this.inventoryRepository.delete(id);
+
+    if (result.affected == 0) {
+      throw new NotFoundException(`해당 Id를 가진 재고는 존재하지 않습니다.`);
+    }
+
+    console.log('result', result);
 
     if (result.affected == 0) {
       throw new NotFoundException(`해당 Id를 가진 재고는 존재하지 않습니다.`);

@@ -17,7 +17,7 @@ export class UserService {
     id: number,
     userUpdateDto: UserUpdateDto,
     user: User,
-  ): Promise<User> {
+  ): Promise<void> {
     const { username, password, updateUsername } = userUpdateDto;
 
     if (
@@ -30,8 +30,6 @@ export class UserService {
     } else {
       throw new NotFoundException(`해당 Id를 가진 회원은 존재하지 않습니다.`);
     }
-
-    return user;
   }
 
   async deleteUser(

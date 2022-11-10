@@ -14,7 +14,6 @@ import {
 } from '@nestjs/common';
 import { InventoryService } from '../application/inventory.service';
 import { CreateInventoryDto } from './dto/create-inventory.dto';
-import { Inventory } from '../persistence/inventory.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../../auth/web/get-user.decorator';
 import { User } from '../../user/persistence/user.entity';
@@ -49,7 +48,7 @@ export class InventoryController {
   createInventory(
     @Body() createInventoryDto: CreateInventoryDto,
     @GetUser() user: User,
-  ): Promise<Inventory> {
+  ): Promise<CreateInventoryDto> {
     this.logger.verbose(`User ${user.username} creating a new inventory.
      Payload: ${JSON.stringify(createInventoryDto)} `);
     return this.inventoryService.createInventory(createInventoryDto, user);
