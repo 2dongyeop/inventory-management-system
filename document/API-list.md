@@ -38,22 +38,33 @@
 
 ## Accessing User Information
 - ### 유저 정보 수정 : `PATCH /users/:id/username`
+    - 요청에 사용자 정보를 담아 보낸다.
     - request
         ```JSON
             {
-                "username": "[username]"
+                "username": "[username]",
+                "password": "[password]",
+                "updateUsername": "[updateUsername]"
             }
         ```
+    - response
+      - 400 : logIn failed
+      - 401 : Unauthorized
+      - 404 : id를 잘못 입력했을 경우
 
 <br/>
 
 - ### 유저 정보 삭제 : `DELETE /users/:id`
+    - 요청에 사용자 정보를 담아 보낸다.
     - request
         ```JSON
             {
-                "username": "[username]"
+                "username": "[username]",
+                "password": "[password]
             }
         ```
+    - response
+      - 401 : Unauthorized
 
 <br/>
 
