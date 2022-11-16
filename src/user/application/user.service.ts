@@ -18,15 +18,22 @@ export class UserService {
     userUpdateDto: UserUpdateDto,
     user: User,
   ): Promise<void> {
-    const { username, password, updateUsername } = userUpdateDto;
+    const { username, password } = userUpdateDto;
 
     if (
       user &&
       user.username === username &&
       bcrypt.compare(password, user.password)
     ) {
-      user.username = updateUsername;
-      await this.userRepository.save(user);
+      await this.userRepository
+        .createQueryBuilder()
+        .update(User)
+        .set(userUpdateDto.getUpdateUsername())
+        .where('id = :id', { id })
+        .execute();
+
+      // user.username = updateUsername;
+      // await this.userRepository.save(user);
     } else {
       throw new NotFoundException(`해당 Id를 가진 회원은 존재하지 않습니다.`);
     }
