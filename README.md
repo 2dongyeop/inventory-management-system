@@ -3,7 +3,9 @@
 </p>
 
 ## Overview
-[Nest.js](https://github.com/nestjs/nest)를 이용하여 재고 관리 시스템을 만들어봅니다.
+로그인을 이용한 재고 관리 시스템을 만들어봅니다.
+
+Nest.js를 학습한 내용은 [링크](https://github.com/2dongyeop/nestjs-fundamental)를 통해 보실 수 있습니다.
 
 <br/>
 
